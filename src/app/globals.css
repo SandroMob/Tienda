@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'ui-sans-serif', 'system-ui', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+  :root {
+    --background: 220 20% 96%; /* fondo general claro */
+    --foreground: 220 20% 15%;  /* texto principal */
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 20%;
+
+    --popover: 220 20% 95%;
+    --popover-foreground: 220 15% 20%;
+
+    --primary: 210 25% 30%; /* azul acero profundo */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 15% 50%; /* azul grisáceo */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 20% 85%;
+    --muted-foreground: 210 15% 30%;
+
+    --accent: 210 40% 55%; /* azul medio brillante */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 85%;
+    --input: 220 15% 85%;
+    --ring: 210 25% 30%;
+
+    --chart-1: 210 25% 30%;
+    --chart-2: 160 65% 50%;
+    --chart-3: 200 50% 45%;
+    --chart-4: 210 40% 55%;
+    --chart-5: 210 15% 50%;
+
+    --radius: 0.5rem;
+
+    --fileExcel: 133 75% 30%;
+    --fileExcel-foreground: 0 0% 100%;
+
+    --sidebar-background: 220 20% 96%;
+    --sidebar-foreground: 220 20% 15%;
+    --sidebar-primary: 210 25% 30%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 40% 55%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 15% 85%;
+    --sidebar-ring: 210 25% 30%;
+  }
+
+  .dark {
+    --background: 220 25% 15%;
+    --foreground: 0 0% 90%;
+
+    --card: 220 20% 18%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 20% 18%;
+    --popover-foreground: 0 0% 90%;
+
+    --primary: 220 5% 65%; /* azul acero profundo */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 15% 50%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 10% 30%;
+    --muted-foreground: 220 5% 65%;
+
+    --accent: 210 40% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 75% 45%;
+    --destructive-foreground: 220 25% 15%;
+
+    --border: 220 15% 40%;
+    --input: 220 15% 45%;
+    --ring: 210 25% 30%;
+
+    --chart-1: 210 25% 30%;
+    --chart-2: 160 65% 50%;
+    --chart-3: 200 50% 45%;
+    --chart-4: 210 40% 55%;
+    --chart-5: 210 15% 50%;
+
+    --radius: 0.3rem;
+
+    --fileExcel: 133 75% 30%;
+    --fileExcel-foreground: 0 0% 100%;
+
+    --sidebar-background: 220 25% 12%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 210 25% 30%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 40% 55%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 15% 40%;
+    --sidebar-ring: 210 25% 30%;
+  }
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-serif;
+  }
+}
