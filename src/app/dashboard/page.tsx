@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Tienda } from '@/models/TiendaModel';
+import CardTienda from '@/components/dashboard/card-tiendas';
 
 export default function Dashboard() {
 const { data: session } = useSession();
@@ -35,18 +36,13 @@ fetchTiendas();
 
 return (
     <div className="min-h-screen">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {loading ? (
             <p>Cargando tiendas...</p>
         ) : (
             tiendas.map((tienda) => (
                 <Card key={tienda.ID} className="shadow-md">
-                <CardHeader>
-                    <CardTitle>{tienda.Name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <p>Enlace: {tienda.LinkStore}</p>
-                </CardContent>
+                    <CardTienda tienda={tienda}></CardTienda>
                 </Card>
             ))
         )}
