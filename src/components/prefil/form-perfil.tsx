@@ -62,7 +62,7 @@ export default function FormPerfil({userData, getUser} : Props) {
                                     }}
                                     required
                                     value={user?.nombre || ""}
-                                    className="w-8/12 bg-zinc-100 px-4 py-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-800 text-black"
+                                    className="w-8/12 bg-zinc-100 px-4 py-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2 text-black"
                                 />
                             </div>
                             <div>
@@ -78,7 +78,7 @@ export default function FormPerfil({userData, getUser} : Props) {
                                     }}
                                     required
                                     value={user?.apellido || ""}
-                                    className="w-8/12 bg-zinc-100 px-4 py-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-800 text-black"
+                                    className="w-8/12 bg-zinc-100 px-4 py-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2 text-black"
                                 />
                             </div>
                             <div>
@@ -94,7 +94,7 @@ export default function FormPerfil({userData, getUser} : Props) {
                                     }}
                                     required
                                     value={user?.email || ""}
-                                    className="w-8/12 bg-zinc-100 px-4 py-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-800 text-black"
+                                    className="w-8/12 bg-zinc-100 px-4 py-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2 text-black"
                                 />
                             </div>
                         </div>

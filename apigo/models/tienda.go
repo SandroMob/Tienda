@@ -7,18 +7,20 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Tienda struct {
-	ID        primitive.ObjectID `bson:"_id,omitempty"`
-	Name      string             `bson:"name"`
-	DNI       string             `bson:"dni"`
-	Logo      string             `bson:"logo"`
-	Facebook  string             `bson:"facebook"`
-	Instagram string             `bson:"instagram"`
-	TikTok    string             `bson:"tiktok"`
-	LinkStore string             `bson:"link_store"`
-	Users     []UserRef          `bson:"users"`
+	ID           primitive.ObjectID `bson:"_id,omitempty"`
+	Name         string             `bson:"name"`
+	DNI          string             `bson:"dni"`
+	Logo         string             `bson:"logo"`
+	Facebook     string             `bson:"facebook"`
+	Instagram    string             `bson:"instagram"`
+	TikTok       string             `bson:"tiktok"`
+	LinkStore    string             `bson:"link_store"`
+	Users        []UserRef          `bson:"users"`
+	Publications []Producto         `bson:"publications"`
 }
 
 type UserRef struct {
@@ -34,7 +36,14 @@ func GetTiendasByUserID(userID primitive.ObjectID) ([]Tienda, error) {
 		"users.userID": userID,
 	}
 
-	cursor, err := collection.Find(context.TODO(), filter)
+	// Excluir publications del resultado
+	projection := bson.M{
+		"publications": 0,
+	}
+
+	opts := options.Find().SetProjection(projection)
+
+	cursor, err := collection.Find(context.TODO(), filter, opts)
 	if err != nil {
 		log.Printf("Error al buscar tiendas: %v\n", err)
 		return nil, err

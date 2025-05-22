@@ -6,11 +6,14 @@ import axios from 'axios';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Tienda } from '@/models/TiendaModel';
 import CardTienda from '@/components/dashboard/card-tiendas';
+import PanelControl from '@/components/dashboard/panel-de-control/panel';
 
 export default function Dashboard() {
 const { data: session } = useSession();
 const [tiendas, setTiendas] = useState<Tienda[]>([]);
 const [loading, setLoading] = useState(true);
+const [modalOpen, setModalOpen] = useState(false);
+const [tiendaModal, setTiendaModal] = useState<Tienda | null>(null);
 
 useEffect(() => {
 const fetchTiendas = async () => {
@@ -34,19 +37,26 @@ const fetchTiendas = async () => {
 fetchTiendas();
 }, []);
 
+const openModal = (tienda: Tienda) => {
+    setTiendaModal(tienda);
+    setModalOpen(true);
+};
+
 return (
     <div className="min-h-screen">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-6 pr-6">
+
         {loading ? (
             <p>Cargando tiendas...</p>
         ) : (
             tiendas.map((tienda) => (
                 <Card key={tienda.ID} className="shadow-md">
-                    <CardTienda tienda={tienda}></CardTienda>
+                    <CardTienda tienda={tienda} openModal={() => openModal(tienda)} />
                 </Card>
             ))
         )}
         </div>
+        <PanelControl tienda={tiendaModal} open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
 );
 }

@@ -28,9 +28,17 @@ func main() {
 	protected := r.Group("/api")
 	protected.Use(middleware.JWTAuthMiddleware())
 	{
-		protected.GET("/empresas", controllers.GetEmpresas)
+		//END POINTS PRODUCTO
+		protected.POST("/productos/:storeId", controllers.PostProducto)
+		protected.PUT("/productos/:storeId/:productoId", controllers.PutProducto)
+		protected.GET("/productos/:storeId", controllers.GetProductosPorTienda)
+
+		//END POINTS TIENDA
+		protected.POST("/tiendas/:userID", controllers.PostTienda)
+		protected.PUT("/tiendas/:id", controllers.PutTienda)
 		protected.GET("/tiendas/:userID", controllers.GetTiendasPorUsuario)
-		protected.POST("/empresas/:id", controllers.PatchEmpresa)
+
+		//END POINTS USERS
 		protected.POST("/users", controllers.EditarUsuario)
 		protected.GET("/users/:id", controllers.GetUsuario)
 	}
