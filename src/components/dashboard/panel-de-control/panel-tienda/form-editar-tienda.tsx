@@ -6,12 +6,14 @@ import { Loader2, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PostTienda, PutTienda, Tienda } from '@/models/TiendaModel';
 import axios from 'axios';
+import { FileEditIcon } from '@/components/ui/localIcons';
 
 interface Props {
     tienda: Tienda | null;
+    onTiendaUpdated: (tienda: Tienda) => void;
 }
 
-export default function FormTienda({ tienda }: Props) {
+export default function FormTienda({ tienda, onTiendaUpdated }: Props) {
     const [disableSubmit, setDisableSubmit] = useState(false);
     const { data: session } = useSession();
 
@@ -26,6 +28,33 @@ export default function FormTienda({ tienda }: Props) {
         LinkStore: tienda?.LinkStore || '',
 });
 
+const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_PRESET!);
+    formData.append('folder', 'tiendas');
+
+    try {
+        const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formData
+        );
+
+        if (res.data.secure_url) {
+        setForm(prev => ({
+            ...prev,
+            Logo: res.data.secure_url,
+        }));
+        }
+    } catch (error) {
+        console.error('Error al subir imagen a Cloudinary:', error);
+    }
+};
+
+
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({
@@ -36,12 +65,16 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
 const tryPatch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!session?.user?.token || !session?.user?._id || !tienda) return;
+    if (!session?.user?.token || !session?.user?._id) return;
     setDisableSubmit(true);
-    if(!form.ID && form.ID.length == 0){
-        await PutTienda(session.user.token,form);
+    if (!form.ID || form.ID.length === 0) {
+        //si crea una nueva tienda espera la respuesta del backend para agregar la tienda al listado precargado
+        const nuevaTienda = await PostTienda(session.user.token, session.user._id, form);
+        onTiendaUpdated(nuevaTienda);// <-- acá se agrega al listado
     } else {
-        await PostTienda(session.user.token, session.user._id,form);
+        //si edita la tienda al  editar en e backend se pasan los cambios al objeto que ya está en el array, para no ahcer una nueva carga
+        await PutTienda(session.user.token, form);
+        onTiendaUpdated(form);
     }
     setDisableSubmit(false);
 };
@@ -51,6 +84,33 @@ return (
         <h2 className="font-bold mb-1 mt-3 text-primary">Editar Tienda</h2>
         <form onSubmit={tryPatch}>
             <div className="flex flex-col items-center justify-center p-3">
+                <div className="flex justify-center mb-6 relative">
+                    <label htmlFor="logo-upload" className="cursor-pointer relative group">
+                        <div className="w-32 h-32 bg-zinc-200 border-2 border-dashed border-gray-400 rounded-[25px] flex items-center justify-center overflow-hidden relative">
+                        {form.Logo ? (
+                            <>
+                            <img
+                                src={form.Logo}
+                                alt=""
+                                className="object-cover w-full h-full rounded-[25px] transition"
+                            />
+                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                <FileEditIcon className="h-6 w-6 text-white" />
+                            </div>
+                            </>
+                        ) : (
+                            <span className="text-gray-400 text-sm text-center">Subir logo</span>
+                        )}
+                        </div>
+                    </label>
+                    <input
+                        id="logo-upload"
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleImageUpload}
+                    />
+                </div>
                 <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-6 w-full max-w-2xl">
                     {[
                     { label: 'Nombre', name: 'Name', type: 'text' },

@@ -68,7 +68,10 @@ func PostTienda(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "Tienda creada correctamente"})
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Tienda creada correctamente",
+		"tienda":  tienda,
+	})
 }
 
 func PutTienda(c *gin.Context) {

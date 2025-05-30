@@ -21,18 +21,20 @@ export interface Tienda {
     publications?: Producto[]
 }
 //ESCRITURA
-export const PostTienda = async (token: string,userID: string,tienda: Tienda) => {
+export const PostTienda = async (token: string,userID: string,tienda: Tienda) : Promise<Tienda> => {
     try {
-        const url = `${process.env.NEXT_PUBLIC_APIGO_URL}/api/tiendas/${userID}`
+        const url = `${process.env.NEXT_PUBLIC_APIGO_URL}/api/tiendas/${userID}`;
         const res = await axios.post(url, tienda, {
-                headers: {
-                    Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'
-                }
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
         });
-        toast.success(res.data.message || 'Tienda creada con éxito', { duration: 3000, position: 'top-center', transition: 'fadeIn'});
+        toast.success(res.data.message || 'Tienda creada con éxito', {duration: 3000,position: 'top-center',transition: 'fadeIn'});
+        return res.data.tienda as Tienda; // ← devolvemos la tienda creada
     } catch (error) {
         console.error('Error al crear tienda:', error);
-        toast.error('Error al crear tienda. Verifica los datos e intenta nuevamente.', { duration: 3000, position: 'top-center', transition: 'fadeIn'});
+        toast.error('Error al crear tienda. Verifica los datos.', { duration: 3000, position: 'top-center', transition: 'fadeIn'});
         throw error;
     }
 };

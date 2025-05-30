@@ -42,6 +42,21 @@ const openModal = (tienda: Tienda) => {
     setModalOpen(true);
 };
 
+const handleTiendaUpdated = (tiendaActualizada: Tienda) => {
+    setTiendas(prevTiendas => {
+        const exists = prevTiendas.some(t => t.ID === tiendaActualizada.ID);
+
+        if (exists) {
+        return prevTiendas.map(t =>
+            t.ID === tiendaActualizada.ID ? tiendaActualizada : t
+        );
+        } else {
+        return [...prevTiendas, tiendaActualizada];
+        }
+    });
+};
+
+
 return (
     <div className="min-h-screen">
         <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-6 pr-6">
@@ -56,7 +71,12 @@ return (
             ))
         )}
         </div>
-        <PanelControl tienda={tiendaModal} open={modalOpen} onClose={() => setModalOpen(false)} />
+        <PanelControl 
+            tienda={tiendaModal} 
+            open={modalOpen} 
+            onClose={() => setModalOpen(false)}
+            onTiendaUpdated={handleTiendaUpdated}
+        />
     </div>
 );
 }

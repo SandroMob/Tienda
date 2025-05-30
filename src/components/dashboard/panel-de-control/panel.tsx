@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Tienda } from '@/models/TiendaModel';
-import FormTienda from './form-editar-tienda';
+import FormTienda from './panel-tienda/form-editar-tienda';
 import { XMarkIcon } from '@/components/ui/localIcons';
 import PanelControlProducto from './panel-productos/panel';
 import Comunidad from './panel-productos/comunidad';
@@ -10,12 +10,13 @@ interface Props {
     tienda: Tienda | null;
     open: boolean;
     onClose: () => void;
+    onTiendaUpdated: (tienda: Tienda) => void;
 }
 
 const tabs = ['Tienda', 'Productos', 'Comunidad'] as const;
 type Tab = typeof tabs[number];
 
-export default function PanelControl({ tienda, open, onClose }: Props) {
+export default function PanelControl({ tienda, open, onClose, onTiendaUpdated }: Props) {
 const [selectedTab, setSelectedTab] = useState<Tab>('Tienda');
 
 useEffect(() => {
@@ -77,7 +78,7 @@ return (
                     >
                         {selectedTab === 'Tienda' && (
                         <div>
-                            <FormTienda tienda={tienda} />
+                            <FormTienda tienda={tienda} onTiendaUpdated={onTiendaUpdated} />
                         </div>
                         )}
 
