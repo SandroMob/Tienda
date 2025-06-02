@@ -59,6 +59,7 @@ const handleTiendaUpdated = (tiendaActualizada: Tienda) => {
 
 return (
     <div className="min-h-screen">
+        
         <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-6 pr-6">
 
         {loading ? (

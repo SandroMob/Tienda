@@ -5,6 +5,7 @@ import { Loader2, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Producto,PostProducto, PutProducto } from '@/models/ProductoModel'; // ajusta path según tu proyecto
 import { Tienda } from '@/models/TiendaModel';
+import ImageUploader from './image-uploader';
 interface Props {
     producto?: Producto | null;
     tienda: Tienda;
@@ -99,7 +100,10 @@ export default function FormProducto({ producto, tienda}: Props) {
                 </div>
                 ))}
             </div>
-
+            <ImageUploader
+                images={form.images}
+                onChange={(imgs) => setForm((prev) => ({ ...prev, images: imgs }))}
+            />
             <div className="flex justify-end pb-6">
                 <Button
                 type="submit"
