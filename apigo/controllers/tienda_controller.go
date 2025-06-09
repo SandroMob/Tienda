@@ -36,6 +36,7 @@ func PostTienda(c *gin.Context) {
 		Instagram string `json:"instagram"`
 		TikTok    string `json:"tiktok"`
 		LinkStore string `json:"link_store"`
+		IsGlobal  bool   `json:"isGlobal"`
 	}
 
 	var body Payload
@@ -53,6 +54,7 @@ func PostTienda(c *gin.Context) {
 		Instagram: body.Instagram,
 		TikTok:    body.TikTok,
 		LinkStore: body.LinkStore,
+		IsGlobal:  body.IsGlobal,
 		Users: []models.UserRef{
 			{
 				UserID: userObjID,
@@ -99,6 +101,7 @@ func PutTienda(c *gin.Context) {
 			"facebook":   tienda.Facebook,
 			"instagram":  tienda.Instagram,
 			"tiktok":     tienda.TikTok,
+			"isGlobal":   tienda.IsGlobal,
 			"link_store": tienda.LinkStore,
 		},
 	}

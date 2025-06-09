@@ -18,7 +18,8 @@ export interface Tienda {
     TikTok: string;
     LinkStore: string;
     users?: UserRef[];
-    publications?: Producto[]
+    publications?: Producto[];
+    IsGlobal: boolean;
 }
 //ESCRITURA
 export const PostTienda = async (token: string,userID: string,tienda: Tienda) : Promise<Tienda> => {

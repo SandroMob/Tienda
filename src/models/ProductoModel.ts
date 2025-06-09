@@ -8,12 +8,6 @@ export interface Producto {
     longDescription: string;
     price: number;
     images: string[];
-    phone: string;
-    storeName: string;
-    storeDNI: string;
-    storeLogo: string;
-    facebookLink: string;
-    instagramLink: string;
     categoria: string;
 }
 //ESCRITURA

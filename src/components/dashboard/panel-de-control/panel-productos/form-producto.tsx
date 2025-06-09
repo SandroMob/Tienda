@@ -1,11 +1,12 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Loader2, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Producto,PostProducto, PutProducto } from '@/models/ProductoModel'; // ajusta path según tu proyecto
 import { Tienda } from '@/models/TiendaModel';
 import ImageUploader from './image-uploader';
+import axios from 'axios';
 interface Props {
     producto?: Producto | null;
     tienda: Tienda;
@@ -14,6 +15,24 @@ interface Props {
 export default function FormProducto({ producto, tienda}: Props) {
     const [disableSubmit, setDisableSubmit] = useState(false);
     const { data: session} = useSession();
+    const [categorias, setCategorias] = useState<{ _id: string; name: string }[]>([]);
+
+    useEffect(() => {
+    const fetchCategorias = async () => {
+        try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_APIGO_URL}/api/categories`, {
+            headers: {
+            Authorization: `Bearer ${session?.user?.token}`,
+            },
+        });
+        setCategorias(res.data);
+        } catch (err) {
+        console.error('Error al cargar categorías:', err);
+        }
+    };
+
+    fetchCategorias();
+    }, []);
 
     const [form, setForm] = useState<Producto>({
         id:producto?.id || '',
@@ -22,16 +41,13 @@ export default function FormProducto({ producto, tienda}: Props) {
         longDescription: producto?.longDescription || '',
         price: producto?.price || 0,
         images: producto?.images || [],
-        phone: producto?.phone || '',
-        storeName: producto?.storeName || '',
-        storeDNI: producto?.storeDNI || '',
-        storeLogo: producto?.storeLogo || '',
-        facebookLink: producto?.facebookLink || '',
-        instagramLink: producto?.instagramLink || '',
         categoria: producto?.categoria || '',
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+        ) => {
+
         const { name, value } = e.target;
         setForm((prev) => ({
         ...prev,
@@ -71,10 +87,6 @@ export default function FormProducto({ producto, tienda}: Props) {
                 { label: 'Descripción corta', name: 'description', type: 'text' },
                 { label: 'Descripción larga', name: 'longDescription', type: 'textarea' },
                 { label: 'Precio', name: 'price', type: 'number' },
-                { label: 'Teléfono', name: 'phone', type: 'text' },
-                { label: 'Facebook', name: 'facebookLink', type: 'url' },
-                { label: 'Instagram', name: 'instagramLink', type: 'url' },
-                { label: 'Categoría', name: 'categoria', type: 'text' },
                 ].map(({ label, name, type }) => (
                 <div key={name}>
                     <label className="block text-sm text-primary mb-1">{label}</label>
@@ -99,6 +111,23 @@ export default function FormProducto({ producto, tienda}: Props) {
                     )}
                 </div>
                 ))}
+                <div>
+                    <label className="block text-sm text-primary mb-1">Categoría</label>
+                    <select
+                        name="categoria"
+                        required
+                        value={form.categoria}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2"
+                    >
+                        <option value="">Seleccione una categoría</option>
+                        {categorias.map((cat) => (
+                        <option key={cat._id} value={cat.name}>
+                            {cat.name}
+                        </option>
+                        ))}
+                    </select>
+                </div>
             </div>
             <ImageUploader
                 images={form.images}

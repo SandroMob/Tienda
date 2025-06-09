@@ -93,12 +93,6 @@ func PutProducto(c *gin.Context) {
 			"publications.$.longDescription": producto.LongDescription,
 			"publications.$.price":           producto.Price,
 			"publications.$.categoria":       producto.Categoria,
-			"publications.$.phone":           producto.Phone,
-			"publications.$.storeName":       producto.StoreName,
-			"publications.$.storeDNI":        producto.StoreDNI,
-			"publications.$.storeLogo":       producto.StoreLogo,
-			"publications.$.facebookLink":    producto.FacebookLink,
-			"publications.$.instagramLink":   producto.InstagramLink,
 			"publications.$.images":          producto.Images,
 		},
 	}

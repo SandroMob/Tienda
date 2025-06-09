@@ -41,6 +41,10 @@ func main() {
 		//END POINTS USERS
 		protected.POST("/users", controllers.EditarUsuario)
 		protected.GET("/users/:id", controllers.GetUsuario)
+
+		//END POINTS CATEGORIAS
+		protected.GET("/categories", controllers.GetCategorias)
+
 	}
 	r.Run()
 }

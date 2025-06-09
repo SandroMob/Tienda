@@ -16,6 +16,7 @@ type Tienda struct {
 	DNI          string             `bson:"dni"`
 	Logo         string             `bson:"logo"`
 	Facebook     string             `bson:"facebook"`
+	IsGlobal     bool               `bson:"isGlobal"`
 	Instagram    string             `bson:"instagram"`
 	TikTok       string             `bson:"tiktok"`
 	LinkStore    string             `bson:"link_store"`
