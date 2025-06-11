@@ -6,6 +6,8 @@ import FormTienda from './panel-tienda/form-editar-tienda';
 import { XMarkIcon } from '@/components/ui/localIcons';
 import PanelControlProducto from './panel-productos/panel';
 import Comunidad from './panel-productos/comunidad';
+import { HelpCircle } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 interface Props {
     tienda: Tienda | null;
@@ -93,6 +95,21 @@ export default function PanelControl({ tienda, open, onClose, onTiendaUpdated }:
             }
             setIsTransitioning(false);
         }, 450);
+    };
+
+    // Agrega esta función dentro del componente PanelControl
+    const showComunidadHelp = () => {
+        Swal.fire({
+            title: '¿Qué es una Comunidad?',
+            html: `Aquí puedes ver y gestionar la presencia de tu tienda en una comunidad.<br><br>
+                    Puedes publicar en cualquier comunidad abierta y solicitar unirte a comunidades cerradas.<br><br>
+                Si tienes dudas, visita nuestro sitio web para más información:<br><br>
+                <a href="https://mercadocomunidad.cl" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline;">
+                    https://mercadocomunidad.cl
+                </a>`,
+            icon: 'info',
+            confirmButtonText: 'Entendido'
+        });
     };
 
     if (!open) return null;
@@ -185,7 +202,15 @@ export default function PanelControl({ tienda, open, onClose, onTiendaUpdated }:
 
                         {selectedTab === 'Comunidad' && (
                             <div className="animate-fade-in-up">
-                                <h3 className="text-md font-semibold mb-2">Comunidad</h3>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <h3 className="text-md font-semibold">Comunidad</h3>
+                                    <HelpCircle
+                                        size={18}
+                                        className="text-blue-500 cursor-pointer"
+                                        onClick={showComunidadHelp}
+                                        title="¿Qué es esto?"
+                                    />
+                                </div>
                                 <Comunidad tienda={tienda} />
                             </div>
                         )}

@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { PostTienda, PutTienda, Tienda } from '@/models/TiendaModel';
 import axios from 'axios';
 import { FileEditIcon } from '@/components/ui/localIcons';
+import Swal from 'sweetalert2';
+import { HelpCircle } from 'lucide-react';
 
 interface Props {
     tienda: Tienda | null;
@@ -79,6 +81,18 @@ export default function FormTienda({ tienda, onTiendaUpdated }: Props) {
         setDisableSubmit(false);
     };
 
+    const showIsGlobalHelp = () => {
+        Swal.fire({
+            title: '¿Qué es Mercado Comunidad?',
+            html: `Es la tienda virtual donde se publicará tu tienda.<br><br>
+                <a href="https://mercadocomunidad.cl" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline;">
+                    https://mercadocomunidad.cl
+                </a>`,
+            icon: 'info',
+            confirmButtonText: 'Entendido'
+        });
+    };
+
     return (
         <div>
             <h2 className="font-bold mb-1 mt-3 text-primary">{tienda?.ID ? 'Editar' : 'Crear'} Tienda</h2>
@@ -142,8 +156,14 @@ export default function FormTienda({ tienda, onTiendaUpdated }: Props) {
                                 className="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary focus:ring-2"
                             />
                             <label htmlFor="IsGlobal" className="text-sm text-primary cursor-pointer">
-                                Tienda Global
+                                Publicar en Mercado Comunidad
                             </label>
+                            <HelpCircle
+                                size={18}
+                                className="text-blue-500 cursor-pointer"
+                                onClick={showIsGlobalHelp}
+                                title="¿Qué es esto?"
+                            />
                         </div>
 
                     </div>

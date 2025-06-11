@@ -42,6 +42,19 @@ export default function PanelControlProducto({ tienda }: Props) {
         <div className="w-full max-w-5xl bg-background rounded-lg shadow border p-4">
         {/* Tabs con iconos */}
         <div className="flex border-b mb-4">
+          
+            <button
+            onClick={() => setSelectedTab('table')}
+            className={`flex-1 p-2 flex items-center justify-center gap-2 text-sm font-medium border-b-2 transition ${
+                selectedTab === 'table'
+                ? 'border-primary text-primary'
+                : 'border-transparent text-muted-foreground hover:text-primary'
+            }`}
+            >
+            <TableIcon className="h-4 w-4" />
+                Listado
+            </button>
+
             <button
                 onClick={() => {
                     setSelectedTab('form');
@@ -56,17 +69,7 @@ export default function PanelControlProducto({ tienda }: Props) {
             <LayoutIcon className="h-4 w-4" />
                 Formulario Producto
             </button>
-            <button
-            onClick={() => setSelectedTab('table')}
-            className={`flex-1 p-2 flex items-center justify-center gap-2 text-sm font-medium border-b-2 transition ${
-                selectedTab === 'table'
-                ? 'border-primary text-primary'
-                : 'border-transparent text-muted-foreground hover:text-primary'
-            }`}
-            >
-            <TableIcon className="h-4 w-4" />
-                Listado
-            </button>
+        
         </div>
 
         {/* Contenido dinámico */}
