@@ -62,3 +62,20 @@ func GetTiendasByUserID(userID primitive.ObjectID) ([]Tienda, error) {
 
 	return tiendas, nil
 }
+
+func GetCantidadTiendasByUserID(userID primitive.ObjectID) int {
+	client := cbd.GetInstanciaBd()
+	collection := client.Database("Mercado").Collection("stores")
+
+	filter := bson.M{
+		"users.userID": userID,
+	}
+	//Contar cantidad de tiendas que tiene el usuario actualmente
+	count, err := collection.CountDocuments(context.TODO(), filter)
+	if err != nil {
+		log.Printf("Error al contar tiendas: %v\n", err)
+		return 0
+	}
+
+	return int(count)
+}

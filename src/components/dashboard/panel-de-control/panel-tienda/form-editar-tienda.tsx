@@ -66,19 +66,25 @@ export default function FormTienda({ tienda, onTiendaUpdated }: Props) {
     };
 
     const tryPatch = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!session?.user?.token || !session?.user?._id) return;
-        setDisableSubmit(true);
-        if (!form.ID || form.ID.length === 0) {
-            //si crea una nueva tienda espera la respuesta del backend para agregar la tienda al listado precargado
-            const nuevaTienda = await PostTienda(session.user.token, session.user._id, form);
-            onTiendaUpdated(nuevaTienda);// <-- acá se agrega al listado
-        } else {
-            //si edita la tienda al  editar en e backend se pasan los cambios al objeto que ya está en el array, para no ahcer una nueva carga
-            await PutTienda(session.user.token, form);
-            onTiendaUpdated(form);
+        try {
+            e.preventDefault();
+            if (!session?.user?.token || !session?.user?._id) return;
+            setDisableSubmit(true);
+            if (!form.ID || form.ID.length === 0) {
+                //si crea una nueva tienda espera la respuesta del backend para agregar la tienda al listado precargado
+                const nuevaTienda = await PostTienda(session.user.token, session.user._id, form);
+                if (nuevaTienda != null) {
+                    onTiendaUpdated(nuevaTienda);// <-- acá se agrega al listado
+                }
+            } else {
+                //si edita la tienda al  editar en e backend se pasan los cambios al objeto que ya está en el array, para no ahcer una nueva carga
+                await PutTienda(session.user.token, form);
+                onTiendaUpdated(form);
+            }
+            setDisableSubmit(false);
+        } catch (error) {
+            console.error('Error al guardar tienda:', error);
         }
-        setDisableSubmit(false);
     };
 
     const showIsGlobalHelp = () => {
@@ -158,12 +164,13 @@ export default function FormTienda({ tienda, onTiendaUpdated }: Props) {
                             <label htmlFor="IsGlobal" className="text-sm text-primary cursor-pointer">
                                 Publicar en Mercado Comunidad
                             </label>
-                            <HelpCircle
-                                size={18}
-                                className="text-blue-500 cursor-pointer"
-                                onClick={showIsGlobalHelp}
-                                title="¿Qué es esto?"
-                            />
+                            <span title="¿Qué es esto?">
+                                <HelpCircle
+                                    size={18}
+                                    className="text-blue-500 cursor-pointer"
+                                    onClick={showIsGlobalHelp}
+                                />
+                            </span>
                         </div>
 
                     </div>

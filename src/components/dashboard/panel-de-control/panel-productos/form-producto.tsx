@@ -73,7 +73,8 @@ export default function FormProducto({ producto, tienda}: Props) {
             await PutProducto(session.user.token, form, tienda.ID);
         } else {
             console.log("Entra a post");
-            await PostProducto(session.user.token, form, tienda.ID);
+            //Cambio acá, ahora mandar id de usuario
+            await PostProducto(session.user.token, form, tienda.ID, session.user._id? session.user._id : '');
         }
         setDisableSubmit(true);
         setDisableSubmit(false);

@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import { Producto } from "./ProductoModel";
 import { toast } from "nextjs-toast-notify";
 import { signOut } from "next-auth/react";
+import { handleAxiosError } from "@/utils/axiosErros";
 
 export interface UserRef {
     userID: string;
@@ -22,7 +23,7 @@ export interface Tienda {
     IsGlobal: boolean;
 }
 //ESCRITURA
-export const PostTienda = async (token: string,userID: string,tienda: Tienda) : Promise<Tienda> => {
+export const PostTienda = async (token: string,userID: string,tienda: Tienda) : Promise<Tienda | null> => {
     try {
         const url = `${process.env.NEXT_PUBLIC_APIGO_URL}/api/tiendas/${userID}`;
         const res = await axios.post(url, tienda, {
@@ -34,9 +35,8 @@ export const PostTienda = async (token: string,userID: string,tienda: Tienda) : 
         toast.success(res.data.message || 'Tienda creada con éxito', {duration: 3000,position: 'top-center',transition: 'fadeIn'});
         return res.data.tienda as Tienda; // ← devolvemos la tienda creada
     } catch (error) {
-        console.error('Error al crear tienda:', error);
-        toast.error('Error al crear tienda. Verifica los datos.', { duration: 3000, position: 'top-center', transition: 'fadeIn'});
-        throw error;
+        handleAxiosError(error, 'tiendas');
+        return null; // ← devolvemos null en caso de error
     }
 };
 

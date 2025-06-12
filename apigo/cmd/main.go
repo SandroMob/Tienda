@@ -24,12 +24,15 @@ func main() {
 		AllowCredentials: true,
 	}))
 
+	// Rutas públicas
 	r.POST("/auth", controllers.Login)
+	r.POST("/register", controllers.Register)
+
 	protected := r.Group("/api")
 	protected.Use(middleware.JWTAuthMiddleware())
 	{
 		//END POINTS PRODUCTO
-		protected.POST("/productos/:storeId", controllers.PostProducto)
+		protected.POST("/productos/:storeId/:userId", controllers.PostProducto)
 		protected.PUT("/productos/:storeId/:productoId", controllers.PutProducto)
 		protected.GET("/productos/:storeId", controllers.GetProductosPorTienda)
 

@@ -4,6 +4,7 @@ import (
 	"context"
 	cbd "go-api/coneccion"
 	"go-api/models"
+	"go-api/util"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,14 @@ func PostTienda(c *gin.Context) {
 	userObjID, err := primitive.ObjectIDFromHex(userID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ID de usuario no válido"})
+		return
+	}
+
+	//Se realiza la validación del plan del usuario antes de crear la tienda,
+	// estoy mandando nulo el tercer parámetro por que ese es sólo para crear productos, no tiendas
+	validarPlan, err := util.ValidatePlan(userObjID, 1, primitive.NilObjectID)
+	if !validarPlan || err != nil {
+		c.JSON(http.StatusForbidden, gin.H{"error": "El plan del usuario no permite crear más tiendas"})
 		return
 	}
 
@@ -58,7 +67,7 @@ func PostTienda(c *gin.Context) {
 		Users: []models.UserRef{
 			{
 				UserID: userObjID,
-				Role:   "1",
+				Role:   "1", //Asigna rol 1 (admin) por defecto al que crea la tienda
 			},
 		},
 		Publications: []models.Producto{},

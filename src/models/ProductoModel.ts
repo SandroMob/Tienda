@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { toast } from "nextjs-toast-notify";
 import { signOut } from "next-auth/react";
+import { handleAxiosError } from "@/utils/axiosErros";
 export interface Producto {
     id: string;
     title: string;
@@ -11,15 +12,14 @@ export interface Producto {
     categoria: string;
 }
 //ESCRITURA
-export const PostProducto = async (token: string,producto: Producto,tiendaID: string) => {
+export const PostProducto = async (token: string,producto: Producto,tiendaID: string, userId: string) => {
     try {
-        const url = `${process.env.NEXT_PUBLIC_APIGO_URL}/api/productos/${tiendaID}`;
+        const url = `${process.env.NEXT_PUBLIC_APIGO_URL}/api/productos/${tiendaID}/${userId}`;
         const res = await axios.post(url, producto, {headers: {Authorization: `Bearer ${token}`,'Content-Type': 'application/json'}});
         toast.success(res.data.message || 'Producto creado con éxito', {duration: 3000,position: 'top-center',transition: 'fadeIn'});
     } catch (error) {
-        console.error('Error al crear producto:', error);
-        toast.error('Error al crear el producto. Por favor, verifique los datos.',{duration: 3000,position: 'top-center',transition: 'fadeIn'});
-        throw error;
+        //Obtengo el status del error
+        handleAxiosError(error, 'productos',);
     }
 };
 
@@ -29,9 +29,7 @@ export const PutProducto = async (token: string,producto: Producto,tiendaID: str
         const res = await axios.put(url, producto, {headers: {Authorization: `Bearer ${token}`,'Content-Type': 'application/json'}});
         toast.success(res.data.message || 'Producto actualizado con éxito', {duration: 3000,position: 'top-center',transition: 'fadeIn'});
     } catch (error) {
-        console.error('Error al editar producto:', error);
-        toast.error('Error al editar el producto. Por favor, verifique los datos.',{duration: 3000,position: 'top-center',transition: 'fadeIn'});
-        throw error;
+        handleAxiosError(error, 'productos');
     }
 };
 

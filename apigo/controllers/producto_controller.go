@@ -5,6 +5,7 @@ import (
 	"fmt"
 	cbd "go-api/coneccion"
 	"go-api/models"
+	"go-api/util"
 	"net/http"
 	"strings"
 
@@ -26,9 +27,28 @@ func PostProducto(c *gin.Context) {
 		return
 	}
 
+	userId := c.Param("userId")
+	if userId == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Falta ID del usuario"})
+		return
+	}
+
 	storeObjID, err := primitive.ObjectIDFromHex(storeID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ID de tienda no válido"})
+		return
+	}
+
+	userObjID, err := primitive.ObjectIDFromHex(userId)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID de usuario no válido"})
+		return
+	}
+
+	// Se valida el plan del usuario antes de agregar un producto
+	validarPlan, err := util.ValidatePlan(userObjID, 2, storeObjID)
+	if !validarPlan || err != nil {
+		c.JSON(http.StatusForbidden, gin.H{"error": "El plan del usuario no permite agregar más productos"})
 		return
 	}
 

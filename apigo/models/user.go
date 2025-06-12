@@ -11,13 +11,13 @@ import (
 )
 
 type Usuario struct {
-	ID            string    `bson:"_id,omitempty" json:"_id"`
-	Nombre        string    `bson:"nombre" json:"nombre"`
-	Apellido      string    `bson:"apellido" json:"apellido"`
-	Email         string    `bson:"email" json:"email"`
-	Pass          string    `bson:"pass" json:"-"`
-	FechaCreacion time.Time `bson:"fecha_creacion" json:"fecha_creacion"`
-	IdEmpresa     string    `bson:"id_empresa" json:"id_empresa"`
+	ID            string             `bson:"_id,omitempty" json:"_id"`
+	Nombre        string             `bson:"nombre" json:"nombre"`
+	Apellido      string             `bson:"apellido" json:"apellido"`
+	Email         string             `bson:"email" json:"email"`
+	Pass          string             `bson:"pass" json:"-"`
+	FechaCreacion time.Time          `bson:"fecha_creacion" json:"fecha_creacion"`
+	PlanID        primitive.ObjectID `bson:"plan_id" json:"plan_id"`
 }
 
 func GetUsuarioByEmail(email string) (*Usuario, error) {
@@ -42,4 +42,29 @@ func GetUsuarioById(id primitive.ObjectID) (*Usuario, error) {
 		return nil, err
 	}
 	return &usuario, err
+}
+
+func CreateUsuario(usuario Usuario) (*Usuario, error) {
+	client := cbd.GetInstanciaBd()
+	collection := client.Database("Mercado").Collection("user")
+
+	// Si no se pasa un planId explícito, asignar el plan FREE por defecto
+	if usuario.PlanID == primitive.NilObjectID {
+		//Agrego el id del plan como objectID
+		planID, _ := primitive.ObjectIDFromHex("684a40ac01ddc82fa3f580b2") // ID del plan gratuito
+		usuario.PlanID = planID
+	}
+
+	usuario.FechaCreacion = time.Now()
+	// Insertar el usuario en la colección
+	result, err := collection.InsertOne(context.TODO(), usuario)
+	if err != nil {
+		return nil, err
+	}
+	// Asignar el ID generado al usuario
+	if oid, ok := result.InsertedID.(primitive.ObjectID); ok {
+		usuario.ID = oid.Hex()
+	}
+	// Retornar el usuario creado
+	return &usuario, nil
 }

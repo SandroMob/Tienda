@@ -58,14 +58,14 @@ const openModal = (tienda: Tienda | null) => {
 
 const handleTiendaUpdated = (tiendaActualizada: Tienda) => {
     setTiendas(prevTiendas => {
-        const exists = prevTiendas.some(t => t.ID === tiendaActualizada.ID);
-
+        const tiendasList = prevTiendas ?? [];
+        const exists = tiendasList.some(t => t.ID === tiendaActualizada.ID);
         if (exists) {
-        return prevTiendas.map(t =>
-            t.ID === tiendaActualizada.ID ? tiendaActualizada : t
-        );
+            return tiendasList.map(t =>
+                t.ID === tiendaActualizada.ID ? tiendaActualizada : t
+            );
         } else {
-        return [...prevTiendas, tiendaActualizada];
+            return [...tiendasList, tiendaActualizada];
         }
     });
 };
@@ -86,7 +86,7 @@ return (
         {loading ? (
             <p>Cargando tiendas...</p>
         ) : (
-            tiendas.map((tienda) => (
+            tiendas?.map((tienda) => (
                 <Card key={tienda.ID} className="shadow-md">
                     <CardTienda tienda={tienda} openModal={() => openModal(tienda)} />
                 </Card>
