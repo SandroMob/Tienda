@@ -152,7 +152,7 @@ export default function PanelControl({ tienda, open, onClose, onTiendaUpdated }:
 
                 {/* Cabecera */}
                 <div className="p-4 border-b flex justify-between items-center bg-primary rounded-t-lg">
-                    <h2 className="text-lg font-semibold text-secondary-foreground">Panel: {tienda?.Name}</h2>
+                    <h2 className="text-lg font-semibold text-secondary">Panel: {tienda?.Name}</h2>
                     <button
                         onClick={onClose}
                         className="text-sm text-secondary-foreground hover:text-muted scale-125 transition-transform duration-200"

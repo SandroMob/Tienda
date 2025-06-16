@@ -1,3 +1,4 @@
+import { handleAxiosError } from "@/utils/axiosErros";
 import axios from "axios";
 import { toast } from "nextjs-toast-notify";
 
@@ -36,8 +37,6 @@ export const PatchEmpresa = async (token: string, empresa: Empresas) => {
         });
         toast.success("Datos actualizados.", { duration: 3000, progress: true, position: "top-center", transition: "fadeIn"});
     } catch (error) {
-        console.error("Error al editar empresa: ", error);
-        toast.error("Error en edición de empresa. Por favor, Corrobore datos e intente nuevamente.", {duration: 3000,progress: true,position: "top-center",transition: "fadeIn"});
-        throw error;
+        handleAxiosError(error, 'empresas');
     }
 };

@@ -7,6 +7,7 @@ import { Producto,PostProducto, PutProducto } from '@/models/ProductoModel'; // 
 import { Tienda } from '@/models/TiendaModel';
 import ImageUploader from './image-uploader';
 import axios from 'axios';
+import { GetUserPlanDetails, Plan } from '@/models/PlanesModel';
 interface Props {
     producto?: Producto | null;
     tienda: Tienda;
@@ -16,18 +17,21 @@ export default function FormProducto({ producto, tienda}: Props) {
     const [disableSubmit, setDisableSubmit] = useState(false);
     const { data: session} = useSession();
     const [categorias, setCategorias] = useState<{ _id: string; name: string }[]>([]);
+    const [limiteImagenes, setLimiteImagenes] = useState(0);
 
     useEffect(() => {
     const fetchCategorias = async () => {
         try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_APIGO_URL}/api/categories`, {
-            headers: {
-            Authorization: `Bearer ${session?.user?.token}`,
-            },
-        });
-        setCategorias(res.data);
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_APIGO_URL}/api/categories`, {
+                headers: {
+                Authorization: `Bearer ${session?.user?.token}`,
+                },
+            });
+            setCategorias(res.data);
+            const respPlan = await GetUserPlanDetails(session?.user?.token || '', session?.user?._id || '') as Plan;
+            setLimiteImagenes(respPlan.max_images_per_publication);
         } catch (err) {
-        console.error('Error al cargar categorías:', err);
+            console.error('Error al cargar categorías:', err);
         }
     };
 
@@ -132,6 +136,7 @@ export default function FormProducto({ producto, tienda}: Props) {
             </div>
             <ImageUploader
                 images={form.images}
+                limit={limiteImagenes}
                 onChange={(imgs) => setForm((prev) => ({ ...prev, images: imgs }))}
             />
             <div className="flex justify-end pb-6">

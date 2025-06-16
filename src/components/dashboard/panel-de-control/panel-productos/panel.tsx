@@ -28,7 +28,6 @@ export default function PanelControlProducto({ tienda }: Props) {
             try {
                 //LLAMADO AL INTERFACE DE PRODUCTO PARA LLAMAR EL LISTADO POR TIENDA CON FILTRO DE PALABRA CLAVE
                 const res = await GetProductosTienda(session.user.token, tienda.ID, "")
-                console.log(res);
                 setProductoList(res);//SETEO DE VARIABLE QUE CONTIENE EL LISTADO DE PRODUCTOS, QUE ES LA QUE ALIMENTA EL COMPONENTE DE TABLA
             } catch (error) {
                 console.error('Error al obtener tiendas:', error);
@@ -79,8 +78,6 @@ export default function PanelControlProducto({ tienda }: Props) {
                 <TablaProductos
                     productos={productoList}
                     onEditar={(producto) => {
-                        console.log("on editar");
-                        console.log(producto);
                         setProducto({
                             ...producto,
                             id: producto.id ?? '',

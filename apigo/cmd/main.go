@@ -48,6 +48,9 @@ func main() {
 		//END POINTS CATEGORIAS
 		protected.GET("/categories", controllers.GetCategorias)
 
+		//END POINTS PLANES
+		protected.GET("/planes/:id", controllers.PlanDetails)
+
 	}
 	r.Run()
 }

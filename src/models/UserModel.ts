@@ -2,6 +2,7 @@ import axios from "axios"
 import { toast } from "nextjs-toast-notify";
 import { Empresas } from "./EmpresasModel";
 import * as crypto from "crypto";
+import { handleAxiosError } from "@/utils/axiosErros";
 
 export interface User{
     _id? : string
@@ -22,7 +23,6 @@ export const GetUsers = async (token: string): Promise<User[]> => {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log(resp.data);
         return resp.data;
     } catch (error) {
         console.error("Error al cargar listado de usuarios: ", error);
@@ -32,8 +32,6 @@ export const GetUsers = async (token: string): Promise<User[]> => {
 
 export const PatchUser = async (token: string, user: User) => {
     try {
-        console.log(token);
-        console.log(user);
         const url = `${process.env.NEXT_PUBLIC_APIGO_URL}/api/users`;
         await axios.post(url, user, {
             headers: {
@@ -48,14 +46,7 @@ export const PatchUser = async (token: string, user: User) => {
             transition: "fadeIn",
         });
     } catch (error) {
-        console.error("Error al editar usuario: ", error);
-        toast.error("Error en edición de usuario.", {
-            duration: 3000,
-            progress: true,
-            position: "top-center",
-            transition: "fadeIn",
-        });
-
+        handleAxiosError(error, 'users');
         throw error;
     }
 };

@@ -8,107 +8,119 @@ body {
 
 @layer base {
   :root {
-    --background: 220 20% 96%; /* fondo general claro */
-    --foreground: 220 20% 15%;  /* texto principal */
+    --background: 214 32% 91%; /* fondo claro azulado como el login */
+    --foreground: 222 84% 5%;  /* texto principal más oscuro */
 
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 20%;
+    --card-foreground: 222 47% 11%;
 
-    --popover: 220 20% 95%;
-    --popover-foreground: 220 15% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 210 25% 30%; /* azul acero profundo */
-    --primary-foreground: 0 0% 100%;
+    --primary: 221 83% 53%; /* azul vibrante del login */
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 15% 50%; /* azul grisáceo */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 210 40% 98%; /* fondo secundario claro */
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 210 20% 85%;
-    --muted-foreground: 210 15% 30%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 13% 37%;
 
-    --accent: 210 40% 55%; /* azul medio brillante */
-    --accent-foreground: 0 0% 100%;
+    --accent: 221 83% 53%; /* mismo azul que primary */
+    --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 85% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 220 15% 85%;
-    --input: 220 15% 85%;
-    --ring: 210 25% 30%;
+    --border: 214 32% 85%; /* bordes más suaves */
+    --input: 214 32% 91%; /* inputs con fondo similar al body */
+    --ring: 221 83% 53%; /* anillo de foco azul vibrante */
 
-    --chart-1: 210 25% 30%;
-    --chart-2: 160 65% 50%;
-    --chart-3: 200 50% 45%;
-    --chart-4: 210 40% 55%;
-    --chart-5: 210 15% 50%;
+    --chart-1: 221 83% 53%; /* azul principal */
+    --chart-2: 142 71% 45%; /* verde como botón secundario */
+    --chart-3: 262 83% 58%; /* púrpura/índigo */
+    --chart-4: 203 89% 53%; /* azul claro */
+    --chart-5: 199 89% 48%; /* azul medio */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* radio más grande como en el login */
 
-    --fileExcel: 133 75% 30%;
-    --fileExcel-foreground: 0 0% 100%;
+    --fileExcel: 142 71% 45%; /* verde coherente */
+    --fileExcel-foreground: 210 40% 98%;
 
-    --sidebar-background: 220 20% 96%;
-    --sidebar-foreground: 220 20% 15%;
-    --sidebar-primary: 210 25% 30%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 55%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 15% 85%;
-    --sidebar-ring: 210 25% 30%;
+    --sidebar-background: 214 32% 91%;
+    --sidebar-foreground: 222 84% 5%;
+    --sidebar-primary: 221 83% 53%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 221 83% 53%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 214 32% 85%;
+    --sidebar-ring: 221 83% 53%;
+
+    /* Variables adicionales del sistema de login */
+    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+    --gradient-secondary: linear-gradient(135deg, #059669 0%, #047857 100%);
+    --gradient-background: linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #eef2ff 100%);
+    --shadow-card: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-button: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   }
 
   .dark {
-    --background: 220 25% 15%;
-    --foreground: 0 0% 90%;
+    --background: 222 47% 11%; /* fondo oscuro más elegante */
+    --foreground: 213 31% 91%;
 
-    --card: 220 20% 18%;
-    --card-foreground: 0 0% 98%;
+    --card: 222 47% 11%;
+    --card-foreground: 213 31% 91%;
 
-    --popover: 220 20% 18%;
-    --popover-foreground: 0 0% 90%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 213 31% 91%;
 
-    --primary: 220 5% 65%; /* azul acero profundo */
-    --primary-foreground: 0 0% 100%;
+    --primary: 217 91% 60%; /* azul más claro para modo oscuro */
+    --primary-foreground: 222 47% 11%;
 
-    --secondary: 210 15% 50%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 213 31% 91%;
 
-    --muted: 220 10% 30%;
-    --muted-foreground: 220 5% 65%;
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 210 40% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 222 47% 11%;
 
-    --destructive: 0 75% 45%;
-    --destructive-foreground: 220 25% 15%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 213 31% 91%;
 
-    --border: 220 15% 40%;
-    --input: 220 15% 45%;
-    --ring: 210 25% 30%;
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 217 91% 60%;
 
-    --chart-1: 210 25% 30%;
-    --chart-2: 160 65% 50%;
-    --chart-3: 200 50% 45%;
-    --chart-4: 210 40% 55%;
-    --chart-5: 210 15% 50%;
+    --chart-1: 217 91% 60%;
+    --chart-2: 142 71% 45%;
+    --chart-3: 262 83% 58%;
+    --chart-4: 203 89% 53%;
+    --chart-5: 199 89% 48%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --fileExcel: 133 75% 30%;
-    --fileExcel-foreground: 0 0% 100%;
+    --fileExcel: 142 71% 45%;
+    --fileExcel-foreground: 213 31% 91%;
 
-    --sidebar-background: 220 25% 12%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 210 25% 30%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 55%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 15% 40%;
-    --sidebar-ring: 210 25% 30%;
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 213 31% 91%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 222 47% 11%;
+    --sidebar-accent: 217 91% 60%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 217 32% 17%;
+    --sidebar-ring: 217 91% 60%;
+
+    /* Variables adicionales para modo oscuro */
+    --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    --gradient-secondary: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    --gradient-background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e1b4b 100%);
+    --shadow-card: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --shadow-button: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
   }
 }
-
-
 
 @layer base {
   * {
@@ -119,7 +131,159 @@ body {
   }
 }
 
+/* =================================
+   COMPONENTES REUTILIZABLES DEL LOGIN
+   ================================= */
+
+@layer components {
+  /* Contenedor principal con gradiente */
+  .auth-container {
+    @apply min-h-screen flex items-center justify-center p-4;
+    background: var(--gradient-background);
+  }
+
+  /* Card principal estilo login */
+  .modern-card {
+    @apply bg-white rounded-2xl border border-gray-100 overflow-hidden;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Header con logo circular */
+  .brand-header {
+    @apply text-center mb-8;
+  }
+
+  .brand-logo {
+    @apply inline-flex items-center justify-center w-16 h-16 rounded-full mb-4;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-button);
+  }
+
+  .brand-title {
+    @apply text-3xl font-bold text-gray-900 mb-2;
+  }
+
+  .brand-subtitle {
+    @apply text-gray-600;
+  }
+
+  /* Sistema de tabs */
+  .tab-container {
+    @apply flex relative;
+  }
+
+  .tab-button {
+    @apply flex-1 py-4 px-6 text-sm font-semibold transition-all duration-300 text-gray-500 hover:text-gray-700;
+  }
+
+  .tab-button.active {
+    @apply text-blue-600 bg-blue-50;
+  }
+
+  .tab-indicator {
+    @apply absolute bottom-0 h-0.5 bg-blue-600 transition-all duration-300;
+  }
+
+  /* Inputs estilo login */
+  .modern-input {
+    @apply w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg transition-all duration-200 bg-gray-50;
+    @apply focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white;
+  }
+
+  .modern-input-with-icon {
+    @apply relative;
+  }
+
+  .input-icon {
+    @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5;
+  }
+
+  .input-toggle {
+    @apply absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors;
+  }
+
+  /* Botones estilo login */
+  .modern-button {
+    @apply w-full py-3 font-semibold rounded-lg transition-all duration-200 transform shadow-lg;
+    @apply hover:scale-[1.02] active:scale-[0.98] hover:shadow-xl;
+  }
+
+  .modern-button-primary {
+    @apply modern-button text-white;
+    background: var(--gradient-primary);
+  }
+
+  .modern-button-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #3730a3 100%);
+  }
+
+  .modern-button-secondary {
+    @apply modern-button text-white;
+    background: var(--gradient-secondary);
+  }
+
+  .modern-button-secondary:hover {
+    background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+  }
+
+  /* Mensajes de estado */
+  .alert-error {
+    @apply mb-6 p-4 bg-red-50 border-l-4 border-red-400 rounded-r-lg;
+    @apply animate-in slide-in-from-left-2 duration-300;
+  }
+
+  .alert-error-text {
+    @apply text-red-700 text-sm;
+  }
+
+  .alert-success {
+    @apply mb-6 p-4 bg-green-50 border-l-4 border-green-400 rounded-r-lg;
+    @apply animate-in slide-in-from-left-2 duration-300;
+  }
+
+  .alert-success-text {
+    @apply text-green-700 text-sm;
+  }
+
+  /* Layout de formularios */
+  .form-container {
+    @apply p-8;
+  }
+
+  .form-fields {
+    @apply space-y-4;
+  }
+
+  .form-grid-2 {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+  }
+
+  .form-actions {
+    @apply space-y-6;
+  }
+
+  /* Enlaces de navegación */
+  .nav-link {
+    @apply text-blue-600 hover:text-blue-700 font-semibold transition-colors cursor-pointer;
+  }
+
+  /* Contenedor responsive */
+  .auth-wrapper {
+    @apply w-full max-w-md;
+  }
+
+  /* Footer del auth */
+  .auth-footer {
+    @apply text-center mt-6 text-sm text-gray-600;
+  }
+}
+
+/* =================================
+   ANIMACIONES MEJORADAS
+   ================================= */
+
 @layer utilities {
+  /* Animaciones de entrada */
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -129,10 +293,6 @@ body {
       opacity: 1;
       transform: scale(1) translateY(0);
     }
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.3s ease-out forwards;
   }
 
   @keyframes fadePanel {
@@ -146,11 +306,7 @@ body {
     }
   }
 
-  .animate-fade-panel {
-    animation: fadePanel 0.25s ease-out both;
-  }
-
-    @keyframes slide-left {
+  @keyframes slideLeft {
     from {
       opacity: 0;
       transform: translateX(30px);
@@ -161,7 +317,7 @@ body {
     }
   }
 
-  @keyframes slide-right {
+  @keyframes slideRight {
     from {
       opacity: 0;
       transform: translateX(-30px);
@@ -172,78 +328,174 @@ body {
     }
   }
 
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* Clases de animación */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .animate-fade-panel {
+    animation: fadePanel 0.25s ease-out both;
+  }
+
   .animate-slide-left {
-    animation: slide-left 0.3s ease-out both;
+    animation: slideLeft 0.3s ease-out both;
   }
 
   .animate-slide-right {
-    animation: slide-right 0.3s ease-out both;
+    animation: slideRight 0.3s ease-out both;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.3s ease-out forwards;
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* Efectos de hover mejorados */
+  .hover-lift {
+    @apply transition-all duration-200 transform;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300;
+  }
+
+  .hover-glow:hover {
+    @apply shadow-xl;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(59, 130, 246, 0.1);
+  }
+
+  /* Efectos de foco mejorados */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200;
+  }
+
+  /* Gradientes reutilizables */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  .gradient-background {
+    background: var(--gradient-background);
+  }
+
+  /* Sombras mejoradas */
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-button {
+    box-shadow: var(--shadow-button);
+  }
+
+  /* Estados de carga */
+  .loading-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, transparent 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .dark .loading-shimmer {
+    background: linear-gradient(90deg, #374151 25%, transparent 50%, #374151 75%);
+    background-size: 200% 100%;
   }
 }
 
-/* Animaciones para el panel */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: scale(0.95) translateY(1rem);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
+/* =================================
+   UTILIDADES ADICIONALES
+   ================================= */
 
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(1rem);
+@layer utilities {
+  /* Scroll suave */
+  .scroll-smooth {
+    scroll-behavior: smooth;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  /* Ocultar scrollbar manteniendo funcionalidad */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-}
 
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out forwards;
-}
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.3s ease-out forwards;
-}
+  /* Texto truncado mejorado */
+  .text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 
-/* Versión con Tailwind (para tailwind.config.js) */
-/* 
-module.exports = {
-  theme: {
-    extend: {
-      keyframes: {
-        'fade-in': {
-          from: {
-            opacity: '0',
-            transform: 'scale(0.95) translateY(1rem)'
-          },
-          to: {
-            opacity: '1',
-            transform: 'scale(1) translateY(0)'
-          }
-        },
-        'fade-in-up': {
-          from: {
-            opacity: '0',
-            transform: 'translateY(1rem)'
-          },
-          to: {
-            opacity: '1',
-            transform: 'translateY(0)'
-          }
-        }
-      },
-      animation: {
-        'fade-in': 'fade-in 0.3s ease-out forwards',
-        'fade-in-up': 'fade-in-up 0.3s ease-out forwards'
-      }
-    }
+  .text-truncate-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Backdrop blur para modales */
+  .backdrop-blur-strong {
+    backdrop-filter: blur(12px) saturate(180%);
+  }
+
+  /* Estados de interacción mejorados */
+  .interactive {
+    @apply transition-all duration-200 cursor-pointer;
+  }
+
+  .interactive:hover {
+    @apply scale-105 shadow-md;
+  }
+
+  .interactive:active {
+    @apply scale-95;
   }
 }
-*/

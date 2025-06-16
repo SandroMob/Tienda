@@ -51,9 +51,7 @@ export const PutTienda = async ( token: string, tienda: Tienda ) => {
         });
         toast.success(res.data.message || 'Tienda actualizada con éxito', { duration: 3000, position: 'top-center',transition: 'fadeIn'});
     } catch (error) {
-        console.error('Error al editar tienda:', error);
-        toast.error('Error al actualizar tienda. Verifica los datos e intenta nuevamente.', { duration: 3000, position: 'top-center', transition: 'fadeIn'});
-        throw error;
+        handleAxiosError(error, 'tiendas');	
     }
 };
 
@@ -69,16 +67,7 @@ export const GetTiendas = async (token: string, userId: string, palabraClave: st
         });
         return res.data;
     } catch (error: unknown) {
-            const axiosError = error as AxiosError;
-            const statusCode = axiosError.response?.status;
-            if (statusCode === 401) {
-                console.error("Token expirado. Cerrando sesión...");
-                toast.error("Sesión expirada. Por favor, inicia sesión nuevamente.", { duration: 3000,    progress: true,     position: "top-center",    transition: "fadeIn"});
-                signOut();
-                return [];
-            }
-        console.error("Al traer tiendas: ", error);
-        toast.error("Al traer tiendas.", {duration: 3000,progress: true,position: "top-center",transition: "fadeIn"});
+            handleAxiosError(error, 'tiendas');
         return [];
     }
 };

@@ -11,29 +11,52 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import axios from 'axios';
 import { X, Upload, GripVertical } from 'lucide-react';
+import { toast } from 'nextjs-toast-notify';
 
 interface Props {
   images: string[];
   onChange: (images: string[]) => void;
+  limit?: number; // Opcional, para limitar el número de imágenes
 }
 
-export default function ImageUploader({ images, onChange }: Props) {
+export default function ImageUploader({ images, onChange, limit }: Props) {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(limit);
     const file = e.target.files?.[0];
     if (!file) return;
+    // Validar si se ha alcanzado el límite de imágenes
+    if (limit && images.length >= limit) {
+      toast.warning(`Llegaste al límite de imágenes por producto. (Limite de plan ${limit})`, {
+          duration: 3000,
+          progress: true,
+          position: "top-center",
+          transition: "fadeIn",
+      });
+      return;
+    }
 
     // Validar tipo de archivo
     if (!file.type.startsWith('image/')) {
-      alert('Por favor selecciona un archivo de imagen válido');
+        toast.info("El archivo compartido no es una imágen, prueba con otro!", {
+          duration: 3000,
+          progress: true,
+          position: "top-center",
+          transition: "fadeIn",
+      });
       return;
     }
 
     // Validar tamaño (máximo 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      alert('El archivo es demasiado grande. Máximo 5MB');
+      toast.info("El archivo es demasiado grande. Máximo 5MB", {
+          duration: 3000,
+          progress: true,
+          position: "top-center",
+          transition: "fadeIn",
+      });
       return;
     }
 
@@ -46,6 +69,7 @@ export default function ImageUploader({ images, onChange }: Props) {
     formData.append('folder', 'productos');
 
     try {
+
       const res = await axios.post(
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
         formData,
@@ -92,8 +116,8 @@ export default function ImageUploader({ images, onChange }: Props) {
       {uploading && (
         <div className="mb-4">
           <div className="w-full bg-gray-200 rounded-full h-2">
-            <div 
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+            <div
+              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
               style={{ width: `${uploadProgress}%` }}
             ></div>
           </div>
@@ -105,24 +129,24 @@ export default function ImageUploader({ images, onChange }: Props) {
         <p className="text-sm text-gray-600">
           Arrastra las imágenes para reordenarlas. La primera será la imagen principal.
         </p>
-        
+
         <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={images} strategy={rectSortingStrategy}>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {images.map((url, index) => (
-                <SortableImage 
-                  key={url} 
-                  url={url} 
+                <SortableImage
+                  key={url}
+                  url={url}
                   index={index}
                   isFirst={index === 0}
-                  onRemove={() => handleRemove(index)} 
+                  onRemove={() => handleRemove(index)}
                 />
               ))}
-              
+
               {/* Zona de subida como un cuadrado más */}
               <label className={`
-                cursor-pointer relative rounded-lg border-2 border-dashed border-gray-300 
-                hover:border-blue-400 hover:bg-blue-50 transition-all duration-200 
+                cursor-pointer relative rounded-lg border-2 border-dashed border-gray-300
+                hover:border-blue-400 hover:bg-blue-50 transition-all duration-200
                 flex flex-col items-center justify-center h-32 bg-gray-50
                 ${uploading ? 'opacity-50 cursor-not-allowed' : ''}
               `}>
@@ -130,10 +154,10 @@ export default function ImageUploader({ images, onChange }: Props) {
                 <span className="text-sm text-gray-500 font-medium">
                   {uploading ? 'Subiendo...' : 'Subir Imagen'}
                 </span>
-                <input 
-                  type="file" 
-                  accept="image/*" 
-                  onChange={handleUpload} 
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleUpload}
                   disabled={uploading}
                   className="hidden"
                 />
@@ -146,16 +170,16 @@ export default function ImageUploader({ images, onChange }: Props) {
   );
 }
 
-function SortableImage({ 
-  url, 
-  index, 
-  isFirst, 
-  onRemove 
-}: { 
-  url: string; 
+function SortableImage({
+  url,
+  index,
+  isFirst,
+  onRemove
+}: {
+  url: string;
   index: number;
   isFirst: boolean;
-  onRemove: () => void; 
+  onRemove: () => void;
 }) {
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({ id: url });
 
@@ -179,10 +203,10 @@ function SortableImage({
           Principal
         </div>
       )}
-      
+
       {/* Handle para arrastrar */}
-      <div 
-        {...attributes} 
+      <div
+        {...attributes}
         {...listeners}
         className="absolute top-2 right-8 bg-black bg-opacity-50 text-white rounded p-1 hover:bg-opacity-75 cursor-grab active:cursor-grabbing z-10"
       >
@@ -203,7 +227,6 @@ function SortableImage({
         alt={`Imagen ${index + 1}`}
         className="w-full h-32 object-cover"
       />
-      
       {/* Número de orden */}
       <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-xs">
         #{index + 1}

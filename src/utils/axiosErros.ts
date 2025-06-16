@@ -41,6 +41,10 @@ export const handleAxiosError = (error: unknown, context: string): void => {
             });
             break;
 
+        case 404:
+            //404 generico para cuando no vengan datos o cuando no se encuentre el endpoint
+            console.log("No se encontraron datos.");
+            break;
         default:
             console.log("Error inesperado:", error);
             toast.error("Error inesperado. Por favor, intente nuevamente.", {

@@ -39,12 +39,12 @@ return (
                 <td className="px-4 py-2">{producto.categoria}</td>
                 <td className="px-4 py-2 text-center">
                     <Button
-                    variant="ghost"
+                    variant="outline"
                     size="icon"
                     onClick={() => onEditar(producto)}
                     aria-label="Editar producto"
                     >
-                        <Pencil className="h-4 w-4 text-primary" />
+                        <Pencil className="h-4 w-4" />
                     </Button>
                 </td>
                 </tr>

@@ -10,14 +10,8 @@ import (
 // A esta función pienso preguntarle si el usuario puede agregar más elementos al sitio según el plan que tiene.
 // En este caso lo está haciendo para crear productos y para crear tiendas.
 func ValidatePlan(userId primitive.ObjectID, accion int, storeId primitive.ObjectID) (bool, error) {
-	// Buscar el usuario por ID
-	usuario, err := models.GetUsuarioById(userId)
-	if err != nil {
-		return false, err
-	}
-
 	// Obtener el plan del usuario
-	plan, err := models.GetPlanById(usuario.PlanID)
+	plan, err := GetPlanDetalis(userId)
 	if err != nil {
 		return false, err
 	}
@@ -37,4 +31,19 @@ func ValidatePlan(userId primitive.ObjectID, accion int, storeId primitive.Objec
 	}
 
 	return true, nil
+}
+
+func GetPlanDetalis(userId primitive.ObjectID) (*models.ServicePlans, error) {
+	usuario, err := models.GetUsuarioById(userId)
+	if err != nil {
+		return nil, err
+	}
+	//muestro los datos obtenidos por consola
+
+	// Obtener el plan del usuario
+	plan, err := models.GetPlanById(usuario.PlanID)
+	if err != nil {
+		return nil, err
+	}
+	return plan, nil
 }

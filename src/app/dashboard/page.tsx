@@ -29,7 +29,6 @@ const fetchTiendas = async () => {
             Authorization: `Bearer ${session.user.token}`,
         },
         });
-        console.log(res);
         setTiendas(res.data);
     } catch (error) {
         console.error('Error al obtener tiendas:', error);
