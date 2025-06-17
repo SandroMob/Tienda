@@ -115,7 +115,7 @@ export default function PanelControl({ tienda, open, onClose, onTiendaUpdated }:
     if (!open) return null;
 
     return (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-start justify-center pt-20 overflow-auto">
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-start justify-center pt-20 overflow-auto backdrop-blur-sm">
             <div
                 ref={containerRef}
                 className="bg-white dark:bg-background rounded-lg shadow-lg relative
@@ -151,11 +151,11 @@ export default function PanelControl({ tienda, open, onClose, onTiendaUpdated }:
                 </div>
 
                 {/* Cabecera */}
-                <div className="p-4 border-b flex justify-between items-center bg-primary rounded-t-lg">
-                    <h2 className="text-lg font-semibold text-secondary">Panel: {tienda?.Name}</h2>
+                <div className="p-4 border-b flex justify-between items-center bg-primary rounded-t-sm">
+                    <h2 className="text-lg font-semibold text-primary-foreground dark:text-yellow-100">Panel: {tienda?.Name}</h2>
                     <button
                         onClick={onClose}
-                        className="text-sm text-secondary-foreground hover:text-muted scale-125 transition-transform duration-200"
+                        className="text-sm text-secondary hover:text-muted scale-125 transition-transform duration-200"
                     >
                         <XMarkIcon />
                     </button>
@@ -204,12 +204,13 @@ export default function PanelControl({ tienda, open, onClose, onTiendaUpdated }:
                             <div className="animate-fade-in-up">
                                 <div className="flex items-center gap-2 mb-2">
                                     <h3 className="text-md font-semibold">Comunidad</h3>
-                                    <HelpCircle
-                                        size={18}
-                                        className="text-blue-500 cursor-pointer"
-                                        onClick={showComunidadHelp}
-                                        title="¿Qué es esto?"
-                                    />
+                                    <span title="¿Qué es esto?">
+                                        <HelpCircle
+                                            size={18}
+                                            className="text-blue-500 cursor-pointer"
+                                            onClick={showComunidadHelp}
+                                        />
+                                    </span>
                                 </div>
                                 <Comunidad tienda={tienda} />
                             </div>

@@ -7,7 +7,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-var jwtSecret = []byte("TuClaveSecreta") // Reemplaza con tu clave secreta
+var jwtSecret = []byte("46t41hyv2ga5asda23asDf343251vsdf")
 
 func GenerateJWT(usuario models.Usuario) (string, error) {
 	claims := jwt.MapClaims{

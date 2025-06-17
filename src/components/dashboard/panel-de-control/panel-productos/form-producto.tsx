@@ -88,12 +88,12 @@ export default function FormProducto({ producto, tienda}: Props) {
         <form onSubmit={handleSubmit}>
             <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-6 w-full mx-auto py-4">
                 {[
-                { label: 'Título', name: 'title', type: 'text' },
+                { label: 'Título', name: 'title', type: 'text'},
                 { label: 'Descripción corta', name: 'description', type: 'text' },
                 { label: 'Descripción larga', name: 'longDescription', type: 'textarea' },
                 { label: 'Precio', name: 'price', type: 'number' },
                 ].map(({ label, name, type }) => (
-                <div key={name}>
+                <div key={name} className='relative'>
                     <label className="block text-sm text-primary mb-1">{label}</label>
                     {type === 'textarea' ? (
                     <textarea

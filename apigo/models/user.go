@@ -2,6 +2,8 @@ package models
 
 import (
 	"context"
+	"crypto/sha256"
+	"fmt"
 	cbd "go-api/coneccion"
 	"time"
 
@@ -55,7 +57,7 @@ func CreateUsuario(usuario Usuario) (*Usuario, error) {
 		usuario.PlanID = planID
 	}
 
-	usuario.FechaCreacion = time.Now()
+	usuario.Pass = string(Encrypt(usuario.Pass)) // Encriptar la contraseña
 	// Insertar el usuario en la colección
 	result, err := collection.InsertOne(context.TODO(), usuario)
 	if err != nil {
@@ -67,4 +69,9 @@ func CreateUsuario(usuario Usuario) (*Usuario, error) {
 	}
 	// Retornar el usuario creado
 	return &usuario, nil
+}
+
+func Encrypt(password string) string {
+	hash := sha256.Sum256([]byte(password))
+	return fmt.Sprintf("%x", hash[:])
 }

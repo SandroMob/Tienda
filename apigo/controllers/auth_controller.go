@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"go-api/models"
 	"go-api/util"
 	"net/http"
@@ -26,10 +27,12 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Usuario o contraseña incorrectos"})
 		return
 	}
-
+	loginData.Pass = models.Encrypt(loginData.Pass)
+	fmt.Println("Contraseña encriptada:", loginData.Pass)
 	//Validar contraseña
 	if usuario.Pass != loginData.Pass {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Usuario o contraseña incorrectos"})
+
 		return
 	}
 

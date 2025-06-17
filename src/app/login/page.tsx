@@ -27,7 +27,7 @@ export default function AuthPage() {
         });
         
         setDisableSubmit(false);
-        if (resp?.error) return setError("Credenciales incorrectas");
+        if (resp?.error) return setError("Usuario no registrado");
         if (resp?.ok) return router.push("/dashboard/");
     };
 
