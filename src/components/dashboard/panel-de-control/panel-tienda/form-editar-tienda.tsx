@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Loader2, Save, Store, CreditCard, Facebook, Instagram, Music, HelpCircle, Upload } from 'lucide-react';
 import { Tienda } from '@/models/TiendaModel';
+import Swal from 'sweetalert2';
 
 // Mock data para la demo
 interface Props {
